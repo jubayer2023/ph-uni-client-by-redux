@@ -1,10 +1,13 @@
-import { Layout } from "antd";
+import { Button, Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
+import { useAppDispatch } from "../../redux/hooks";
+import { logoutUser } from "../../redux/features/auth/authSlice";
+import { toast } from "sonner";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 // const items = [
 //   {
@@ -37,10 +40,16 @@ const { Header, Content, Footer } = Layout;
 // ];
 
 const MainLayout = () => {
+  const dispatch = useAppDispatch();
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    toast.success("Logout successfull", { duration: 1000 });
   };
 
   return (
@@ -59,6 +68,9 @@ const MainLayout = () => {
               height: "100%",
             }}
           >
+            <div style={{ padding: "0px 20px" }}>
+              <Button onClick={handleLogout}>Logout</Button>
+            </div>
             {collapsed ? (
               <MenuUnfoldOutlined
                 style={{ fontSize: "18px", color: "white", cursor: "pointer" }}

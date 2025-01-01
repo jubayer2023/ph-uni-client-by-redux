@@ -19,7 +19,7 @@ const userRole = {
 };
 
 const Sidebar: React.FC<TSidebarProps> = ({ collapsed, setCollapsed }) => {
-  const role = "faculty";
+  const role = "admin";
 
   let sidebarItems;
 
