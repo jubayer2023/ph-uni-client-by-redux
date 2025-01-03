@@ -4,6 +4,8 @@ import { adminPaths } from "../../routes/admin.route";
 import React from "react";
 import { facultyPaths } from "../../routes/faculty.route";
 import { studentPaths } from "../../routes/student.route";
+import { useAppSelector } from "../../redux/hooks";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 
 const { Sider } = Layout;
 
@@ -19,19 +21,18 @@ const userRole = {
 };
 
 const Sidebar: React.FC<TSidebarProps> = ({ collapsed, setCollapsed }) => {
-  const role = "admin";
-
+  const user = useAppSelector(selectCurrentUser);
   let sidebarItems;
 
-  switch (role) {
+  switch (user!.role) {
     case userRole.ADMIN:
-      sidebarItems = sidebarItemsGenerator(adminPaths, role);
+      sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN);
       break;
     case userRole.FACULTY:
-      sidebarItems = sidebarItemsGenerator(facultyPaths, role);
+      sidebarItems = sidebarItemsGenerator(facultyPaths, userRole.FACULTY);
       break;
     case userRole.STUDENT:
-      sidebarItems = sidebarItemsGenerator(studentPaths, role);
+      sidebarItems = sidebarItemsGenerator(studentPaths, userRole.STUDENT);
       break;
 
     default:

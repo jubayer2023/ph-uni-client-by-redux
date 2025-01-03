@@ -21,7 +21,7 @@ const Login = () => {
 
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Login under process !");
-    console.log(toastId);
+    // console.log(toastId);
     try {
       const userInfo = {
         id: data?.userId,
@@ -30,14 +30,14 @@ const Login = () => {
       // console.log(userInfo);
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data?.accessToken) as TUser;
-      // console.log(user);
+      // console.log(res.data?.accessToken);
 
       dispatch(setUser({ user: user, token: res.data?.accessToken }));
       toast.success("Login succeed !", { id: toastId, duration: 1500 });
       navigte(`/${user?.role}/dashboard`);
       //
     } catch (err) {
-      console.log("Something went wrong!");
+      console.log("Something went wrong!", err);
       toast.error("Something went wrong!", { id: toastId, duration: 1500 });
     }
   };
